@@ -24,8 +24,13 @@ public class SpringbootExpertApplication {
 			clientes.save(new Cliente("Dougllas"));
 			clientes.save(new Cliente("Outro Cliente"));
 
+			/*
           	boolean existe = clientes.existsByNome("Dougllas");
 			System.out.println("existe um cliente com o nome Dougllas?" + existe);
+			*/
+
+			List<Cliente> result = clientes.encontrarPorNome("Dougllas");
+			result.forEach(System.out::println);
 		};
 	}
 
