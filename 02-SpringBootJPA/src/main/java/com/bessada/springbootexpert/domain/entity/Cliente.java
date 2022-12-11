@@ -16,7 +16,7 @@ public class Cliente {
     @Column(name="nome", length=100)
     private String nome;
 
-    @OneToMany(mappedBy = "cliente") // para que seja possivel acessar todos os pedidos de um cliente diretamente do cliente
+    @OneToMany(mappedBy = "cliente", fetch=FetchType.LAZY) // para que seja possivel acessar todos os pedidos de um cliente diretamente do cliente | LAZY OFF, EAGER ON
     private Set<Pedido> pedidos;
 
     public Cliente() {}
