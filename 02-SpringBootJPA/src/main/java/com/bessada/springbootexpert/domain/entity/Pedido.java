@@ -1,13 +1,27 @@
 package com.bessada.springbootexpert.domain.entity;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
+@Entity
+@Table(name="pedido")
 public class Pedido {
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
+    @ManyToOne
+    @JoinColumn(name="cliente_id")
     private Cliente cliente;
+    @Column(name="data_pedido")
     private LocalDate dataPedido;
+    @Column(name="total", length = 20, precision = 2) //(tamanho e casas decimais)
     private BigDecimal total;
+
+    @OneToMany(mappedBy = "pedido")
+    private Set<ItemPedido> itens;
 
     public Integer getId() {
         return id;
@@ -39,5 +53,13 @@ public class Pedido {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
 }
