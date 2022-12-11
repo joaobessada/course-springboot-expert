@@ -27,6 +27,7 @@ public class SpringbootExpertApplication {
 			List<Cliente> todosClientes = clientes.obterTodos();
 			todosClientes.forEach(System.out::println);
 
+
 			System.out.println("Atualizando clientes");
 			todosClientes.forEach(c -> {
 				c.setNome(c.getNome() + " atualizado.");
@@ -39,10 +40,10 @@ public class SpringbootExpertApplication {
 			System.out.println("Buscando clientes");
 			clientes.buscarPorNome("Cli").forEach(System.out::println);
 
-//            System.out.println("deletando clientes");
-//            clientes.obterTodos().forEach(c -> {
-//                clientes.deletar(c);
-//            });
+            System.out.println("deletando clientes");
+            clientes.obterTodos().forEach(c -> {
+                clientes.deletar(c);
+          });
 
 			todosClientes = clientes.obterTodos();
 			if(todosClientes.isEmpty()){
