@@ -4,10 +4,12 @@ import com.bessada.springbootexpert.domain.entity.Cliente;
 import com.bessada.springbootexpert.domain.entity.ItemPedido;
 import com.bessada.springbootexpert.domain.entity.Pedido;
 import com.bessada.springbootexpert.domain.entity.Produto;
+import com.bessada.springbootexpert.domain.entity.enums.StatusPedido;
 import com.bessada.springbootexpert.domain.repository.Clientes;
 import com.bessada.springbootexpert.domain.repository.ItensPedido;
 import com.bessada.springbootexpert.domain.repository.Pedidos;
 import com.bessada.springbootexpert.domain.repository.Produtos;
+import com.bessada.springbootexpert.exception.PedidoNaoEncontradoException;
 import com.bessada.springbootexpert.exception.RegraNegocioException;
 import com.bessada.springbootexpert.rest.dto.ItemPedidoDTO;
 import com.bessada.springbootexpert.rest.dto.PedidoDTO;
@@ -43,6 +45,7 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setTotal(dto.getTotal());
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.REALIZADO);
 
         List<ItemPedido> itensPedido = converterItens(pedido, dto.getItens());
         repository.save(pedido);
@@ -72,5 +75,17 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<Pedido> obterPedidoCompleto(Integer id) {
         return repository.findByIdFetchItens(id);
+    }
+
+
+    @Override
+    @Transactional
+    public void atualizaStatus(Integer id, StatusPedido statusPedido) {
+        repository
+                .findById(id)
+                .map(pedido -> {
+                    pedido.setStatus(statusPedido);
+                    return repository.save(pedido);
+                }).orElseThrow(() -> new PedidoNaoEncontradoException());
     }
 }

@@ -2,7 +2,9 @@ package com.bessada.springbootexpert.rest.controller;
 
 import com.bessada.springbootexpert.domain.entity.ItemPedido;
 import com.bessada.springbootexpert.domain.entity.Pedido;
+import com.bessada.springbootexpert.domain.entity.enums.StatusPedido;
 import com.bessada.springbootexpert.domain.repository.Pedidos;
+import com.bessada.springbootexpert.rest.dto.AtualizacaoStatusPedidoDTO;
 import com.bessada.springbootexpert.rest.dto.InfoItemPedidoDTO;
 import com.bessada.springbootexpert.rest.dto.InfoPedidoDTO;
 import com.bessada.springbootexpert.rest.dto.PedidoDTO;
@@ -41,6 +43,14 @@ public class PedidoController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontado"));
     }
 
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatus(@PathVariable Integer id,
+                             @RequestBody AtualizacaoStatusPedidoDTO dto) {
+        String novoStatus = dto.getNovoStatus();
+        service.atualizaStatus(id, StatusPedido.valueOf(novoStatus));
+    }
+
     private InfoPedidoDTO converter(Pedido pedido) {
         return InfoPedidoDTO.builder()
                 .codigo(pedido.getId())
@@ -48,6 +58,7 @@ public class PedidoController {
                 .cpf(pedido.getCliente().getCpf())
                 .nomeCliente(pedido.getCliente().getNome())
                 .total(pedido.getTotal())
+                .status(pedido.getStatus().name())
                 .itens(converter(pedido.getItens()))
                 .build();
     }
