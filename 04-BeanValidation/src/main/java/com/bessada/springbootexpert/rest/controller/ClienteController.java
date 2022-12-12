@@ -2,6 +2,7 @@ package com.bessada.springbootexpert.rest.controller;
 
 import com.bessada.springbootexpert.domain.entity.Cliente;
 import com.bessada.springbootexpert.domain.repository.Clientes;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -29,7 +30,7 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente save( @RequestBody Cliente cliente ){
+    public Cliente save( @RequestBody @Valid Cliente cliente ){
         return repository.save(cliente);
     }
 
@@ -49,7 +50,7 @@ public class ClienteController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update( @PathVariable Integer id,
-                        @RequestBody Cliente cliente ){
+                        @RequestBody @Valid Cliente cliente ){
         repository
                 .findById(id)
                 .map( clienteExistente -> {
