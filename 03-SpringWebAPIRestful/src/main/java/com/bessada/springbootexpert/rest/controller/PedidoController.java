@@ -2,6 +2,7 @@ package com.bessada.springbootexpert.rest.controller;
 
 import com.bessada.springbootexpert.domain.entity.Pedido;
 import com.bessada.springbootexpert.domain.repository.Pedidos;
+import com.bessada.springbootexpert.rest.dto.PedidoDTO;
 import com.bessada.springbootexpert.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -17,48 +18,13 @@ import java.util.List;
 public class PedidoController {
 
     @Autowired
-    Pedidos repository;
-
-    @Autowired
     PedidoService service;
-
-    @GetMapping("/{id}")
-    public Pedido findById(@PathVariable Integer id) {
-        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Pedido create(Pedido pedido) {
-        return repository.save(pedido);
+    public Integer save (@RequestBody PedidoDTO dto) {
+        Pedido pedido = service.salvar(dto);
+        return pedido.getId();
     }
 
-    @PutMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Integer id, @RequestBody Pedido pedido) {
-        repository.findById(id)
-                .map(p -> {
-                    pedido.setId(p.getId());
-                    repository.save(pedido);
-                    return p;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer id) {
-        repository.deleteById(id);
-    }
-
-    @GetMapping
-    public List<Pedido> find(Pedido filtro) {
-        ExampleMatcher matcher = ExampleMatcher
-                .matching()
-                .withIgnoreCase()
-                .withStringMatcher(
-                        ExampleMatcher.StringMatcher.CONTAINING );
-
-        Example example = Example.of(filtro, matcher);
-        return repository.findAll(example);
-    }
 }

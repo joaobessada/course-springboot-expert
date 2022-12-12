@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -28,5 +29,5 @@ public class Pedido {
     private BigDecimal total;
 
     @OneToMany(mappedBy = "pedido")
-    private Set<ItemPedido> itens;
+    private List<ItemPedido> itens;
 }
