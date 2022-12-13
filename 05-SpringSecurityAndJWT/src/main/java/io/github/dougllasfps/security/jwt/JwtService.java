@@ -1,3 +1,4 @@
+// encoding and decoding
 package io.github.dougllasfps.security.jwt;
 
 import io.github.dougllasfps.VendasApplication;

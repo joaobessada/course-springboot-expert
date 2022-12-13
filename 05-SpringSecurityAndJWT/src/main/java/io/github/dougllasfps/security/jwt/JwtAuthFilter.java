@@ -1,5 +1,5 @@
+// intercepta as requisições e faz a filtragem necessária
 package io.github.dougllasfps.security.jwt;
-
 import io.github.dougllasfps.service.impl.UsuarioServiceImp;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
