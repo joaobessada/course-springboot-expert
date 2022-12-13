@@ -1,4 +1,5 @@
 package com.bessada.springbootexpert.rest.dto;
+import com.bessada.springbootexpert.validation.NotEmptyList;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +17,7 @@ public class PedidoDTO {
 
     @NotNull(message="Campo total do pedido é obrigatório")
     private BigDecimal total;
+
+    @NotEmptyList(message="Pedido não pode ser realizado sem itens")
     private List<ItemPedidoDTO> itens;
 }
