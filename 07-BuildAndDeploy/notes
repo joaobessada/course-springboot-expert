@@ -1,0 +1,36 @@
+Para testar a API
+
+Crie um usuário, autorize o mesmo, pegue o token, clique em Authorize e passe Bearer + token
+
+--
+
+Gerando um JAR com Maven
+
+Entrar na raiz do projeto
+Abrir no terminal
+mvn clean package (vai limpar o pacote e iniciar a build)
+Entrar na pasta target
+Rodar o jar ($java -jar arquivo.jar)
+
+--
+
+Gerando um WAR com Maven
+
+pom.xml
+<packaging>war</packaging>
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-tomcat</artifactId>
+	<scope>provided</scope>
+</dependency>
+
+Entrar no Application/extends SpringBootServletInitializer
+
+Rodar na raiz do projeto mvn clean package
+
+--
+
+Profiles
+
+para especificar um profile no maven, só passar a flag -P profile
